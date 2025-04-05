@@ -5,10 +5,10 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy the public directory and all the necessary files into the container
-#COPY ./frontend/todo/public /app/public
-#COPY ./frontend/todo/src /app/src
-COPY /frontend/todo/package.json /app/package.json
-COPY /frontend/todo/package-lock.json /app/package-lock.json
+COPY ./frontend/todo/public /app/public
+COPY ./frontend/todo/src /app/src
+COPY ./frontend/todo/package.json /app/package.json
+COPY ./frontend/todo/package-lock.json /app/package-lock.json
 
 
 # Install dependencies
