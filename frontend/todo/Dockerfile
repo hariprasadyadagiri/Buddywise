@@ -1,17 +1,23 @@
-# Use official Node.js image
-FROM node:18
+# Use an official Node.js image as base
+FROM node:18-alpine
 
-# Set working directory
-WORKDIR /frontend/todo
+# Set the working directory inside the container
+WORKDIR /app
 
-# Copy package.json and package-lock.json BEFORE npm install
-COPY . .
+# Copy only package.json and package-lock.json first
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
-# Expose port (optional)
+# Copy the rest of the application code
+COPY . .
+
+# Build the React app (optional, if needed)
+# RUN npm run build
+
+# Expose the port your app runs on (e.g., 3000 for React)
 EXPOSE 3000
 
-# Start the application
+# Start the app
 CMD ["npm", "start"]
