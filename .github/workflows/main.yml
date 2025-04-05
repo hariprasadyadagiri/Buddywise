@@ -1,9 +1,7 @@
 name: CI/CD Pipeline for Azure AKS
 
 on:
-  push:
-    branches:
-      - main  # Run the pipeline on pushes to main branch
+  workflow_dispatch:
 
 jobs:
   build-and-push:

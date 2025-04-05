@@ -2,7 +2,7 @@
 FROM python:3.11
 
 # Set working directory inside the container
-WORKDIR /app
+WORKDIR /backend
 
 # Copy dependency file first
 COPY requirements.txt ./

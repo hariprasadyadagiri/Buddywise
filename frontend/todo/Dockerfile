@@ -2,7 +2,7 @@
 FROM node:18
 
 # Set working directory
-WORKDIR /app
+WORKDIR /frontend/todo
 
 # Copy package.json and package-lock.json BEFORE npm install
 COPY . .
