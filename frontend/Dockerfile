@@ -5,13 +5,13 @@ FROM node:18
 WORKDIR /app
 
 # Copy package.json and package-lock.json first for caching
-COPY frontend/todo/package*.json ./
+COPY . .
 
 # Install dependencies
 RUN npm install
 
 # Copy remaining source files
-COPY frontend/todo/ .
+COPY . .
 
 # Expose port if needed
 EXPOSE 3000
