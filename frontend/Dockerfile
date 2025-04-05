@@ -1,19 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+# Use Node.js base image
+FROM node:18
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the public directory and all the necessary files into the container
-#COPY ./frontend/todo/public /app/public
-#COPY ./frontend/todo/src /app/src
-#COPY ./frontend/todo/package.json /app/package.json
-#COPY ./frontend/todo/package-lock.json /app/package-lock.json
-
-COPY . .
+# Copy package.json and package-lock.json first for caching
+COPY frontend/todo/package*.json ./
 
 # Install dependencies
 RUN npm install
+
+# Copy remaining source files
+COPY frontend/todo/ .
+
+# Expose port if needed
+EXPOSE 3000
 
 # Start the app
 CMD ["npm", "start"]
