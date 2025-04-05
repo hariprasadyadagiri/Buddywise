@@ -24,4 +24,4 @@ jobs:
         run: |
           docker login -u yadagirihari@gmail.com -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push mydockerhub/myapp-backend:latest
-          docker push mydockerhub/myapp-frontend:la
+          docker push mydockerhub/myapp-frontend:latest
