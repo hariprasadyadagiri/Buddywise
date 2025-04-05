@@ -22,6 +22,6 @@ jobs:
 
       - name: Push Docker images    
         run: |
-          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+          docker login -u yadagirihari -p N@nnaH@ri81189
           docker push mydockerhub/myapp-backend:latest
           docker push mydockerhub/myapp-frontend:latest
