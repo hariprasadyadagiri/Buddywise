@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /frontend/todo
 
 # Copy only package.json and package-lock.json first
 COPY package.json package-lock.json ./
