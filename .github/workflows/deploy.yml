@@ -13,12 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build and push Docker images
+      - name: Build Docker images
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker build -t myapp-backend:latest ./backend
           docker build -f frontend/todo/Dockerfile -t my-frontend-app ./frontend/todo
           docker tag myapp-backend:latest mydockerhub/myapp-backend:latest
           docker tag myapp-frontend:latest mydockerhub/myapp-frontend:latest
+
+      - name: Push Docker images    
+        run: |
+          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push mydockerhub/myapp-backend:latest
           docker push mydockerhub/myapp-frontend:latest
