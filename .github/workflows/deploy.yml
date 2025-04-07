@@ -1,9 +1,14 @@
 name: CI/CD Pipeline
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     branches:
       - main
+
 
 jobs:
   build:
@@ -19,7 +24,7 @@ jobs:
           CLIENT-ID: ${{ secrets.AZURE_CLIENT_ID }}
           TENANT-ID: ${{ secrets.AZURE_TENANT_ID }}
           SUBSCRIPTION-ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          auth-type: 'SERVICE_PRINCIPAL'
+          auth-type: ''
           creds: ''
 
       - name: Log in to Azure Container Registry
