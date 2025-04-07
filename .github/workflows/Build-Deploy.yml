@@ -52,7 +52,7 @@ jobs:
      # Step 7: Configure kubectl to access AKS
       - name: Configure kubectl to access AKS
         run: |
-          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
+          az aks get-credentials --resource-group ${{ secrets.RESOURCE_GROUP }} --name ${{ secrets.CLUSTER_NAME }}
 
       # Step 8: Deploy the Frontend and Backend to AKS
       - name: Deploy Frontend to AKS
