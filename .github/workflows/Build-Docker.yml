@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          CLIENT-ID: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          enable-AzPSSession: true
+          #enable-AzPSSession: false
+          #auth-type: 'SERVIE_PRINCIPAL'
+          allow-no-subscription: true 
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          LOGIN-SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_CLIENT_ID }}
+          password: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Build Docker images
+        run: |
+          docker build -t myapp-backend:latest ./backend
+          docker build -f frontend/todo/Dockerfile -t myapp-frontend:latest ./frontend/todo
+          docker tag myapp-backend:latest ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
+          docker tag myapp-frontend:latest ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
+
+      - name: Push Docker images to ACR
+        run: |
+          az acr login --name buddywise
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
