@@ -19,6 +19,7 @@ jobs:
           CLIENT-ID: ${{ secrets.AZURE_CLIENT_ID }}
           TENANT-ID: ${{ secrets.AZURE_TENANT_ID }}
           SUBSCRIPTION-ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: 'servicePrincipal'
           creds: ''
 
       - name: Log in to Azure Container Registry
@@ -37,5 +38,6 @@ jobs:
 
       - name: Push Docker images to ACR
         run: |
+          az acr login --name buddywise
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
