@@ -25,7 +25,9 @@ jobs:
           TENANT-ID: ${{ secrets.AZURE_TENANT_ID }}
           SUBSCRIPTION-ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          auth-type: ''
+          enable-AzPSSession: true
+          auth-type: 'servie-principal'
+          allow-no-subscription: true
           creds: ''
 
       - name: Log in to Azure Container Registry
