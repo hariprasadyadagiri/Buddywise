@@ -9,7 +9,6 @@ on:
     branches:
       - main
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,3 +48,19 @@ jobs:
           az acr login --name buddywise
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
+
+     # Step 7: Configure kubectl to access AKS
+      - name: Configure kubectl to access AKS
+        run: |
+          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
+
+      # Step 8: Deploy the Frontend and Backend to AKS
+      - name: Deploy Frontend to AKS
+        run: |
+          kubectl set image deployment/frontend frontend=${{ secrets.ACR_NAME }}/frontend:latest --record
+          kubectl rollout status deployment/frontend
+
+      - name: Deploy Backend to AKS
+        run: |
+          kubectl set image deployment/backend backend=${{ secrets.ACR_NAME }}/backend:latest --record
+          kubectl rollout status deployment/backend     
