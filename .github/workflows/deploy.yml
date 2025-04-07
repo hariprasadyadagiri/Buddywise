@@ -13,15 +13,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Azure Container Registry Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_CLIENT_ID }}
+          password: ${{ secrets.AZURE_CLIENT_SECRET }}
+
       - name: Build Docker images
         run: |
           docker build -t myapp-backend:latest ./backend
           docker build -f frontend/todo/Dockerfile -t myapp-frontend:latest ./frontend/todo
-          docker tag myapp-backend:latest mydockerhub/myapp-backend:latest
-          docker tag myapp-frontend:latest mydockerhub/myapp-frontend:latest
+          docker tag myapp-backend:latest ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
+          docker tag myapp-frontend:latest ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
 
-      - name: Push Docker images    
+      - name: Push Docker images to Azure Container Registry
         run: |
-          docker login -u yadagirihari@gmail.com -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker push mydockerhub/myapp-backend:latest
-          docker push mydockerhub/myapp-frontend:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
