@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp-frontend
-          image: buddywise.azurecr.io/myapp-frontend:latest
+          image: acrbuddywise.azurecr.io/myapp-frontend:latest
           ports:
             - containerPort: 3000
 ---
