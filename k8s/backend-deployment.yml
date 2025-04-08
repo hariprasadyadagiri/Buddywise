@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: myapp-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: myapp-backend
   template:
     metadata:
       labels:
-        app: backend
+        app: myapp-backend
     spec:
       containers:
-        - name: backend
+        - name: myapp-backend
           image: buddywise.azurecr.io/todo-backend:latest
           ports:
             - containerPort: 5000
@@ -24,7 +24,7 @@ metadata:
   name: backend-service
 spec:
   selector:
-    app: backend
+    app: myapp-backend
   ports:
     - protocol: TCP
       port: 5000

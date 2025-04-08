@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: myapp-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: myapp-frontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: myapp-frontend
     spec:
       containers:
-        - name: frontend
+        - name: myapp-frontend
           image: buddywise.azurecr.io/todo-frontend:latest
           ports:
             - containerPort: 3000
@@ -24,7 +24,7 @@ metadata:
   name: frontend-service
 spec:
   selector:
-    app: frontend
+    app: myapp-frontend
   ports:
     - protocol: TCP
       port: 80
