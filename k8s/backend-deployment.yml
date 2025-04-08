@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp-backend
-          image: buddywise.azurecr.io/todo-backend:latest
+          image: buddywise.azurecr.io/myapp-backend:latest
           ports:
             - containerPort: 5000
 ---
