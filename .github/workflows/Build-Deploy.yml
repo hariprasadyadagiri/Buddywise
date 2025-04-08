@@ -25,8 +25,8 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
           enable-AzPSSession: true
-          #enable-AzPSSession: false
-          #auth-type: 'SERVIE_PRINCIPAL'
+          enable-AzPSSession: false
+          auth-type: 'SERVIE_PRINCIPAL'
           allow-no-subscription: true 
 
       - name: Log in to Azure Container Registry
