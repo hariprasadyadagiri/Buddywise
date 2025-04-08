@@ -45,7 +45,7 @@ jobs:
 
       - name: Push Docker images to ACR
         run: |
-          az acr login --name buddywise
+          az acr login --name acrbuddywise.azurecr.io
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
 
