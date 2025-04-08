@@ -57,10 +57,10 @@ jobs:
       # Step 8: Deploy the Frontend and Backend to AKS
       - name: Deploy myapp-frontend to AKS
         run: |
-          kubectl set image deployment/myapp-frontend myapp-frontend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest --record
+          kubectl set image deployment/myapp-frontend myapp-frontend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest 
           kubectl rollout status deployment/myapp-frontend
 
       - name: Deploy myapp-Backend to AKS
         run: |
-          kubectl set image deployment/myapp-backend myapp-backend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest --record
+          kubectl set image deployment/myapp-backend myapp-backend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest 
           kubectl rollout status deployment/myapp-backend     
