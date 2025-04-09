@@ -6,7 +6,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: myapp-frontend
   template:
     metadata:
       labels:
@@ -17,16 +17,16 @@ spec:
           image: acrbuddywise.azurecr.io/myapp-frontend:latest
           ports:
             - containerPort: 3000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-spec:
-  selector:
-    app: myapp-frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: frontend-service
+# spec:
+#   selector:
+#     app: myapp-frontend
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+#   type: LoadBalancer

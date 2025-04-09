@@ -54,7 +54,7 @@ jobs:
         run: |
           az aks get-credentials --resource-group ${{ secrets.RESOURCE_GROUP }} --name ${{ secrets.CLUSTER_NAME }}
       
-      - name: ✅ Create namespace if it doesn't exist
+      - name: Create namespace if it doesn't exist
         run: |
           kubectl get namespace prod || kubectl create namespace prod
         
