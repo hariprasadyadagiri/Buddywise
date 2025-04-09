@@ -57,10 +57,10 @@ jobs:
       # Step 8: Apply Kubernetes manifests
       - name: Deploy Kubernetes manifests
         run: |
-          kubectl apply -f k8s/frontend-deployment.yaml -n prod
-          kubectl apply -f k8s/frontend-service.yaml -n prod
-          kubectl apply -f k8s/backend-deployment.yaml -n prod
-          kubectl apply -f k8s/backend-service.yaml -n prod
+          kubectl apply -f k8s/frontend-deployment.yml -n prod
+          kubectl apply -f k8s/frontend-service.yml -n prod
+          kubectl apply -f k8s/backend-deployment.yml -n prod
+          kubectl apply -f k8s/backend-service.yml -n prod
 
       # Step 9: Deploy updated images
       - name: Deploy myapp-frontend to AKS
