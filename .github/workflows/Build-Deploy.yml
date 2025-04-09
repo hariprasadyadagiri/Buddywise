@@ -49,18 +49,27 @@ jobs:
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest
 
-     # Step 7: Configure kubectl to access AKS
+           # Step 7: Configure kubectl to access AKS
       - name: Configure kubectl to access AKS
         run: |
           az aks get-credentials --resource-group ${{ secrets.RESOURCE_GROUP }} --name ${{ secrets.CLUSTER_NAME }}
 
-      # Step 8: Deploy the Frontend and Backend to AKS
+      # Step 8: Apply Kubernetes manifests
+      - name: Deploy Kubernetes manifests
+        run: |
+          kubectl apply -f k8s/frontend-deployment.yaml -n prod
+          kubectl apply -f k8s/frontend-service.yaml -n prod
+          kubectl apply -f k8s/backend-deployment.yaml -n prod
+          kubectl apply -f k8s/backend-service.yaml -n prod
+
+      # Step 9: Deploy updated images
       - name: Deploy myapp-frontend to AKS
         run: |
-          kubectl set image deployment/myapp-frontend myapp-frontend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest 
-          kubectl rollout status deployment/myapp-frontend
+          kubectl set image deployment/myapp-frontend myapp-frontend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-frontend:latest -n prod
+          kubectl rollout status deployment/myapp-frontend -n prod
 
-      - name: Deploy myapp-Backend to AKS
+      - name: Deploy myapp-backend to AKS
         run: |
-          kubectl set image deployment/myapp-backend myapp-backend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest 
-          kubectl rollout status deployment/myapp-backend     
+          kubectl set image deployment/myapp-backend myapp-backend=${{ secrets.REGISTRY_LOGIN_SERVER }}/myapp-backend:latest -n prod
+          kubectl rollout status deployment/myapp-backend -n prod
+    
